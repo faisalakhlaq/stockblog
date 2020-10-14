@@ -1,0 +1,21 @@
+{%extends "main_page.html"%}
+{%block content%}
+<div class="stock-page">
+    <h1>Rock Spring Properties Scrapper</h1>
+    <div class="error-message">
+        {% if error_message %}
+            {{ error_message | safe }} <br>
+        {% endif %}
+    </div>
+    <div>
+        <p>
+            Welcome to the Stock Data Fetcher. Its a simple hobby project which
+            fetches any given stock's data from yahoo for given dates.
+            Data is then displayed in a candlestick chart.
+            The stock data fetcher is based on a tutorial from Udemy
+            'The Python Mega Course by Ardit Sulce'
+            Tools used are Python, Bokeh and Flask.
+        </p>
+    </div>
+</div>
+{% endblock %}

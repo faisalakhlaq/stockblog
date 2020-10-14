@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <meta charset="UTF-8">
+    <title>Stock Data</title>
+</head>
+<body>
+    <header>
+        <div class="main-menu">
+            <div class="container">
+                <h1 class="logo">Fetch Stock Data</h1>
+                <strong><nav>
+                    <ul class="menu">
+                        <li><a href="{{url_for('home')}}">Home</a></li>
+                        <li><a href="{{url_for('stock_data')}}">Stock Data</a></li>
+                    </ul>
+                </nav></strong>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                      {{ message }}
+                  {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        {%block content%}{%endblock%}
+    </div>
+    <div class="main-footer">
+        <div>
+            Thanks for visiting <br>
+            Developed by Faisal Akhlaq
+        </div>
+        <div>
+            &#169; Faisal Akhlaq
+        </div>
+    </div>
+</body>
+</html>

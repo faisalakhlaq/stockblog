@@ -1,0 +1,26 @@
+{% extends "main_page.html" %}
+{% block content %}
+<script type="text/javascript" src="{{cdn_js | safe}}"></script>
+<div class="stock-page">
+    <h1>Stock Data</h1>
+    <p>Stock data displayed in the graphical form using bokeh</p>
+    <form method="post">
+        {{ form.csrt_token }}
+        <label for="stock_ticker_list">Choose a Stock</label>
+        <select name="stock_ticker_list" id="stock_ticker_list">
+        {% for ticker in list_of_tickers%}
+            <option value="{{ ticker }}">{{ticker}}</option>
+        {% endfor %}
+        </select>
+        <br><br>{{ form.startdate.label }} {{form.startdate(class='datepicker')}} {{form.hidden_tag()}}
+        {{ form.enddate.label }} {{form.enddate(class='datepicker')}} {{form.hidden_tag()}}
+        <br><br>{{form.submit()}}
+        {% if error_message %}
+            <br><br>
+            {{ error_message }}
+        {% endif %}
+    </form>
+</div>
+{{script1 | safe}}
+{{div1 | safe}}
+{% endblock %}
