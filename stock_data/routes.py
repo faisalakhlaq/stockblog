@@ -19,7 +19,6 @@ def stock_data():
     form = StockDataForm()
     if request.method == 'GET':
         return render_template("stock_data.html", list_of_tickers=list_of_tickers, form=form)
-
     elif request.method == 'POST':
         if not form.validate_on_submit() or \
                 form.startdate.data > form.enddate.data or \
