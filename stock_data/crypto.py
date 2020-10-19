@@ -40,7 +40,8 @@ class CoinMarket:
             if sym not in id_symbol_dict.values():
                 invalid_symbols.append(sym)
                 # raise ValueError("Invalid symbol %s" %sym)
-        flash("Invalid symbol %s" %invalid_symbols)
+        if len(invalid_symbols) > 0:
+            flash("Invalid symbol %s" %invalid_symbols)
         for k in invalid_symbols:
             symbolsogamount.pop(k, None)
         listToStr = ','.join([str(elem) for elem in symbolsogamount])
