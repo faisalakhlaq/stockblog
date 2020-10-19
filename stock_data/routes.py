@@ -64,7 +64,6 @@ def crypto_currency_data():
             # 3. Put the returned data in a tabular form
             txtarea = form.currencies.data
             if txtarea is not None and len(txtarea.strip()) > 0:
-                import pdb; pdb.set_trace()
                 amount = txtarea.split()
                 currencies = {}
                 seperator = '-'
