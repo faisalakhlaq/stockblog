@@ -45,13 +45,18 @@ class CoinMarket:
         for k in invalid_symbols:
             symbolsogamount.pop(k, None)
         listToStr = ','.join([str(elem) for elem in symbolsogamount])
+        if len(listToStr) == 0:
+            raise ValueError("No currencies to search for")
         self.parameters["symbol"] = listToStr
         self.parameters["convert"] = "DKK"
         try:
             response = requests.get(self.quotas, params=self.parameters, headers=self.headers)
             content = response.json()
-            return self.extract_portfolio_data(data=content['data'],
+            if content['status']['error_code'] == 0:
+                return self.extract_portfolio_data(data=content['data'],
                                                sym_amount_dict=symbolsogamount)
+            else:
+                raise ValueError(content['status']['error_message'])
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             raise e
 
