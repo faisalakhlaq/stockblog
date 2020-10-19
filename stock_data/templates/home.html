@@ -1,7 +1,7 @@
 {%extends "main_page.html"%}
 {%block content%}
 <div class="stock-page">
-    <h1>Stock Data</h1>
+    <h1>Stock and Crypto Currency Data</h1>
     <div class="error-message">
         {% if error_message %}
             {{ error_message | safe }} <br>
@@ -9,13 +9,25 @@
     </div>
     <div>
         <p>
-            Welcome to the Stock Data Fetcher. Its a simple hobby project which
-            fetches any given stock's data from yahoo for given dates. There are
+            Welcome to the Stock Crypto Currency Data Fetcher.
+        </p>
+        <p>
+            <h4>Stcok Data Fetcher</h4>
+            Its a simple hobby project which fetches any given
+            stock's data from yahoo for given dates. Currently there are
             just 100 stocks to choose from.
             Data is then displayed in a candlestick chart.
             The stock data fetcher is based on a tutorial from Udemy
             'The Python Mega Course by Ardit Sulce'
             Tools used are Python, Bokeh and Flask.
+        </p>
+        <p>
+            <h4>Crypto Currency Portfolio</h4>
+            The Crypto Currency Portfolio web app lets the user to enter
+            their currencies and amount of each currency and fetches respective
+            currency data from www.coinmarketcap.com website. The data is
+            fetched by making API calls to coinmarketcap. Users portfolio
+            is displayed in a tabular form afterwards.
         </p>
     </div>
 </div>

@@ -96,3 +96,25 @@ h2 {
 .error-message {
     color: #ff9999;
 }
+.crypto-portfolio-page {
+ margin: 0 auto;
+ width: 80%;
+ overflow: hidden;
+ border: .1em solid gray;
+}
+
+.crypto-portfolio-page{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    padding: 1em;
+}
+.crypto-portfolio{
+    display:flex;
+    flex-direction:column;
+}
+.crypto-portfolio-right-column{
+    display:flex;
+    flex-direction:column;
+    width: 30%;
+}
