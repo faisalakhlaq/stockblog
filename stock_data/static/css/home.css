@@ -1,0 +1,11 @@
+.stock-page{
+     margin: 0 auto;
+     width: 50%;
+     height: 100%;
+     overflow: hidden;
+     text-align: center;
+     border: .1em solid gray;
+}
+.stock-page h1, h4{
+    color: green;
+}

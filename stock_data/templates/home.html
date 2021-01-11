@@ -1,4 +1,7 @@
 {%extends "main_page.html"%}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock extra_head %}
 {%block content%}
 <div class="stock-page">
     <h1>Stock and Crypto Currency Data</h1>
@@ -9,7 +12,7 @@
     </div>
     <div>
         <p>
-            Welcome to the Stock Crypto Currency Data Fetcher.
+            Welcome to the Stock & Crypto Currency Data Fetcher.
         </p>
         <p>
             <h4>Stock Data Fetcher</h4>
