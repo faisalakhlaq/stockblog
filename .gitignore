@@ -82,9 +82,6 @@ instance/
 instance/config.py
 .webassets-cache
 
-# Images uploaded locally:
-images/
-
 # Scrapy stuff:
 .scrapy
 
