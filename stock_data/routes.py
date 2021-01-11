@@ -16,6 +16,11 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/stock_technical_terms', methods=['GET'])
+def stock_technical_terms():
+    return render_template("stock_technical_terms.html")
+
+
 @app.route('/stock_data', methods=['GET', 'POST'])
 def stock_data():
     tickers = []
@@ -23,7 +28,7 @@ def stock_data():
         for line in file.readlines():
             tickers.append(line)
 
-    print(len(tickers))
+    # print(len(tickers))
     form = StockDataForm()
     if request.method == 'GET':
         return render_template("stock_data.html", list_of_tickers=tickers, form=form)

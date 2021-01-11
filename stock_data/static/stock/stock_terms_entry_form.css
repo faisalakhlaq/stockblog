@@ -1,0 +1,9 @@
+.terms-entry-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tef-taf{
+    rows: 3;
+    cols: 45;
+}

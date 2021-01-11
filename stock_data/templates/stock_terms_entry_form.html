@@ -1,0 +1,85 @@
+{% extends "main_page.html" %}
+{% block title %} Stock Terms Entry Form {% endblock title %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{{url_for('static', filename='stock/stock_terms_entry_form.css')}}">
+{% endblock extra_head %}
+{% block content %}
+<div class="terms-entry-container">
+    <div class="error-message">
+            {{ error_message | safe }}
+    </div>
+    <form action="" method="post">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        <h1>Stock Technical Terms Entry Form</h1>
+        <p>You are logged in as <b>{{current_user.name}}</b>
+            {{ form.refresh() }}</p>
+        <p>
+            {{ form.term_id(type='hidden') }}
+            <div class="update-user-label">{{ form.term_name.label }}</div>
+            {{ form.term_name(size=30, class="update-user-tb") }}
+            {% for error in form.term_name.errors %}</br>
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            <div class="">{{ form.definition.label }}</div>
+            {{ form.definition(size=255, class="tef-taf", rows=3, cols=45) }}
+            {% for error in form.definition.errors %}<br>
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            <div class="">{{ form.description.label }}</div>
+            {{ form.description(size=500, class="tef-taf", rows=3, cols=45) }}
+            {% for error in form.description.errors %}<br>
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            <div class="update-user-label">{{ form.calculation_process.label }}</div>
+            {{ form.calculation_process(size=500, class="tef-taf", rows=3, cols=45) }}
+            {% for error in form.calculation_process.errors %}<br>
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.add_new() }}
+            {{ form.search() }}
+            {{ form.update() }}
+            {{ form.clear() }}
+            {{ form.refresh() }}
+        </p>
+    </form>
+</div>
+<div class="stock-terms-table">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        <label for terms_per_page>Terms Per Page</label>
+        <input id="terms_per_page" size="1">
+        <table style="width:90%">
+              <tr>
+                <th>Title</th>
+                <th>Definition</th>
+                <th>Description</th>
+                <th>Calculation Process</th>
+                <th admin-edit-btn-col>Edit</th>
+                <th>Delete</th>
+              </tr>
+             {% for term in terms %}
+                <tr>
+                    <td>{% if term.term_name %}{{ term.term_name }} {% endif %}</td>
+                    <td>{% if term.definition %}{{ term.definition | truncate(30) }} {% endif %}</td>
+                    <td>{% if term.description %}{{ term.description | truncate(30)}} {% endif %}</td>
+                    <td>{% if term.calculation_process %}{{ term.calculation_process | truncate(30)}} {% endif %}</td>
+                    <td><button class="btn btn-primary" type="submit" name="edit" value="{{ term.id }}"
+                                formmethod="post" onclick="">Edit</button></td>
+                    <td><button class="btn btn-primary" type="submit" name="delete" value="{{ term.id }}"
+                                formmethod="post" onclick="">Delete</button></td>
+                </tr>
+             {% endfor %}
+        </table>
+    </form>
+</div>
+{% endblock content %}

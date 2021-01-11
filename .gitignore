@@ -8,6 +8,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# local-custom
+table_queries.txt
+pyvenv.cfg
+bin
+include
+lib64
+
 # .idea file which are specific to PyCharm
 .idea/
 .idea
@@ -149,3 +156,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+/lib64/

@@ -1,0 +1,15 @@
+{%extends "main_page.html"%}
+
+{% block content %}
+<div class="stock-page">
+<div class="404-page">
+    <h3>Lucky You! You landed on this Error Page</h3>
+    <h1>CSRF Error</h1>
+    <div class="error-message">
+        {{ error_message | safe }}
+    </div>
+    <p>{% if reason %} {{ reason | safe }} {% endif %}</p>
+    <p>Click on another link in the menu bar and get yourself out of here.</p>
+</div>
+</div>
+{% endblock %}

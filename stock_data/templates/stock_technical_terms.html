@@ -1,0 +1,20 @@
+{% extends "main_page.html" %}
+{% block title %}Stock Technical Terms {% endblock %}
+{% block content %}
+<div class="stt-container">
+    <h1>Stock Technical Terms</h1>
+    <form method="GET">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" id="query" name="query">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+    {% for term in terms %}
+    <p>
+        <h5>{{ term.term_name }}</h5>
+        {% if term.definition %} <b>Definition</b>: {{ term.definition }} {% endif %}
+        {% if term.description %} <b>Description</b>: {{ term.description }} {% endif %}
+        {% if term.calculation_process %} <b>Calculation Process</b>: {{ term.calculation_process }} {% endif %}
+    </p>
+    {% endfor %}
+</div>
+{% endblock %}

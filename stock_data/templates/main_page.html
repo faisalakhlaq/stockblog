@@ -2,30 +2,21 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <meta charset="UTF-8">
-    <title>Stock And Crypto Data</title>
+    <title>{% block title %}Stock And Crypto Data{% endblock %}</title>
+    {% block extra_head %}{% endblock extra_head %}
+    {% include 'snippets/css.html' %}
 </head>
 <body>
-    <header>
-        <div class="main-menu">
-            <div class="container">
-                <h1 class="logo">Fetch Stock Data</h1>
-                <strong><nav>
-                    <ul class="menu">
-                        <li><a href="{{url_for('home')}}">Home</a></li>
-                        <li><a href="{{url_for('stock_data')}}">Stock Data</a></li>
-                        <li><a href="{{url_for('crypto_currency_data')}}">Crypto Portfolio</a></li>
-                    </ul>
-                </nav></strong>
-            </div>
-        </div>
-    </header>
+    {% include 'main_nav_bar.html' %}
     <div class="container">
         <div class="flash-messages">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                   {% for category, message in messages %}
-                      {{ message }}
+                      {{ message | safe }}
                   {% endfor %}
                 {% endif %}
             {% endwith %}
@@ -35,12 +26,22 @@
     <div class="main-footer">
         <div>
             Thanks for visiting <br>
-            Developed by Faisal Akhlaq
+            Developed by <a href="https://faisalakhlaq.com" target="_blank">Faisal Akhlaq</a>
         </div>
         <div>
             &#169; Faisal Akhlaq
-            <a href="https://faisalakhlaq.com" target="_blank">www.faisalakhlaq.com</a>
         </div>
     </div>
+{% block extra_scripts %}
+    <script>
+        var message_ele = document.getElementsByClassName("flash-messages")[0];
+        setTimeout(function(){
+          if(message_ele != null){
+            message_ele.style.display = "none";
+          }
+        }, 30000);
+        // message div should disappear after 30 sec
+    </script>
+{% endblock extra_scripts %}
 </body>
 </html>
