@@ -1,4 +1,5 @@
 from stock_data import db
+import datetime
 
 
 class StockTechnicalTerms(db.Model):
@@ -7,15 +8,23 @@ class StockTechnicalTerms(db.Model):
     # TODO drop constraint unique from term_name. One term can have
     # different definitions
     term_name = db.Column(db.String(255), nullable=False, unique=True)
-    definition = db.Column(db.String(255))
+    definition = db.Column(db.String(500))
     description = db.Column(db.String(500))
     calculation_process = db.Column(db.String(500))
+    updated = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
-    def __init__(self, term_name_, definition_=None, description_=None, calculation_process_=None):
+    def __init__(self,
+                 term_name_,
+                 definition_=None,
+                 description_=None,
+                 calculation_process_=None,
+                 # updated_=datetime.datetime.utcnow,
+                 ):
         self.term_name = term_name_
         self.definition = definition_
         self.description = description_
         self.calculation_process = calculation_process_
+        # self.updated = updated_
 
     def get_id(self):
         return self.id

@@ -1,5 +1,7 @@
 from datetime import datetime
 from flask import render_template, request, Blueprint, flash
+from flask_login import login_required
+from sqlalchemy import desc
 # from get_all_tickers import get_tickers as gt
 
 from stock_data import db
@@ -18,7 +20,7 @@ def home():
 
 @stock.route('/stock_technical_terms', methods=['GET', 'POST'])
 def stock_technical_terms():
-    technical_terms = StockTechnicalTerms.query.all()
+    technical_terms = StockTechnicalTerms.query.order_by(desc('updated')).all()
     if request.method == 'POST':
         # import pdb; pdb.set_trace()
         if request.form.get('refresh'):
@@ -62,11 +64,11 @@ def stock_data():
         return render_template("stock_data.html", list_of_tickers=tickers,
                                script1=data[0], div1=data[1], cdn_js=data[2], form=form)
 
-
+@login_required
 @stock.route('/stock_terms_entry_form', methods=['GET', 'POST'])
 def stock_terms_entry_form():
     form = StockTechnicalTermsForm()
-    technical_terms = StockTechnicalTerms.query.all()
+    technical_terms = StockTechnicalTerms.query.order_by(desc('updated')).all()
     if request.method == 'POST':
         if request.form.get('clear') or request.form.get('refresh'):
             form = StockTechnicalTermsForm(None)
@@ -101,7 +103,9 @@ def stock_terms_entry_form():
         elif request.form.get('search'):
             term_name_ = form.term_name.data
             if term_name_ and len(term_name_.strip()) > 0:
-                rs = StockTechnicalTerms.query.filter(StockTechnicalTerms.term_name.ilike("%" + term_name_ + "%")).all()
+                # TODO order_by not working
+                rs = StockTechnicalTerms.query.order_by(desc('updated')).\
+                    filter(StockTechnicalTerms.term_name.ilike("%" + term_name_ + "%")).all()
                 if len(rs) > 0:
                     technical_terms = rs
                 else:

@@ -14,9 +14,9 @@ class StockTechnicalTermsForm(FlaskForm):
     term_id = IntegerField('id', validators=[Optional()])
     term_name = StringField(validators=[DataRequired("please enter a term"),
                                         Length(min=2, max=255,
-                                        message='Length is 3-255 characters')])
-    definition = TextAreaField(validators=[Length(min=0, max=255,
-                                                  message='Length is 0-255 characters')])
+                                        message='Length is 2-255 characters')])
+    definition = TextAreaField(validators=[Length(min=0, max=500,
+                                                  message='Length is 0-500 characters')])
     description = TextAreaField(validators=[Length(min=0, max=500,
                                                   message='Length is 0-255 characters')])
     calculation_process = TextAreaField(validators=[Length(min=0, max=500,
