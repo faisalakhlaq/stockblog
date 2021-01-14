@@ -1,6 +1,6 @@
 {%extends "main_page.html"%}
 {% block extra_head %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}" xmlns="http://www.w3.org/1999/html">
 {% endblock extra_head %}
 {%block content%}
 <div class="stock-page">
@@ -19,12 +19,15 @@
             Its a simple hobby project which consists of two parts.
             Users can fetch any given stock's data from yahoo for given dates. Currently there are
             just 100 stocks to choose from. Data is then displayed in a candlestick chart.
-            Few pages are used for providing general guidelines about stocks.
-            There is an admin panel for adding, updating and deleting reference material
+            One page is used for providing general guidelines about stocks terms.
+            There is an admin panel for adding, updating and deleting guidelines and material
             for the website. A user module is also developed to take care of
-            user registration, login, logout, password recovery and other user related operations.
+            user registration, login, logout, password recovery by email and other user
+            related operations, in-case the admins forget passwords.
             Data about stocks and users is saved in a PostgreSQL database.
-            Tools used are Python, Bokeh and Flask.
+            Tools used are: <br>
+            Python, Bokeh Flask (flask_login, forms, SQLAlchemy, Blueprint)
+            and PostgreSQL.
         </p>
         <p>
             <h4>Crypto Currency Portfolio</h4>
