@@ -10,6 +10,7 @@
     </div>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
+        {{ csrftoken }}
         <p>
             {{ form.username(size=30, placeholder='Username') }}
             {% for error in form.username.errors %}<br>

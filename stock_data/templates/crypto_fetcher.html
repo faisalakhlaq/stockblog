@@ -1,7 +1,7 @@
 {% extends "main_page.html" %}
 {% block title %} Crypto Portfolio {% endblock %}
 {% block content %}
-<style>
+<style xmlns="http://www.w3.org/1999/html">
 tr:nth-child(odd) { background-color : #EAF2D3; }
 tr:hover { background-color : #89ae37; }
 overflow-y:scroll;
@@ -11,56 +11,120 @@ display:block;
 
 <div class="crypto-portfolio-page">
     <div class="crypto-portfolio">
-        <h1>Lets build your Crypto-Currency Portfolio</h1>
+        <h1 class="text-center">Lets build your Crypto-Currency Portfolio</h1>
         <form method="post" novalidate=True>
             {{ form.hidden_tag() }}
+            {{ csrftoken }}
             <p>To view your portfolio, first add all your currencies and
-                the amount of each currency. Then Press view portfolio
+                the amount of each currency. Then press view portfolio
                 button to see your portfolio. </p>
-            <p>The data is fetched using<br>
-                <strong>Coinmarketcap APIs</strong><br>
+            <p>The data is fetched using <strong>Coinmarketcap APIs</strong><br>
             </p>
-            {{ form.currency_symbol.label }} {{form.currency_symbol}}
-            {% for error in form.currency_symbol.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-            <br>
-            {{ form.amount.label }} {{form.amount}}
-            {% for error in form.amount.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-            <br>
-            {{form.add_currency()}}
-            <br>
-            {{form.currencies.label}}{{form.currencies(rows=10, cols=15)}}
-            <br>
-            {{form.clear_currencies}}
-            {{form.fetch_data()}}
+            <div class="form-row">
+                <div class="form-group col-md-6 col-sm-6 col-sx-6">
+                    {{ form.currency_symbol.label }} {{form.currency_symbol(class_='cur_sym_field form-control p-2', size=10)}}
+                    {% for error in form.currency_symbol.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group col-md-6 col-sm-6 col-sx-6">
+                    {{ form.amount.label }} {{form.amount(class_='cur_amount form-control p-2', size=10)}}
+                    {% for error in form.amount.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group col-md-12 col-sm-12 col-sx-12 text-center">
+<!--                    <div class="alert alert-warning alert-dismissible fade show no_cur_error" role="alert">-->
+<!--                      Please provide currency and amount.-->
+<!--                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                      </button>-->
+<!--                    </div>-->
+                    <button id="add_curr_and_amount_btn" class="btn btn-primary"
+                            onclick="addSymbolAndAmount(this)">Add Currency
+                        <span class="badge">+</span></button>
+                </div>
+                <div class="form-group col-md-6 col-sm-6 col-sx-6">
+                    {{form.currencies.label}}
+                    {{form.currencies(class_='added_cur form-control p-2', rows=3)}}
+                </div>
+                <div class="form-group col-md-12 col-sm-12 col-sx-12 text-center">
+                    <button id="clr_btn" class="btn btn-warning"
+                            onclick="clearAddedCurrencies(this)">
+                        <i class="fa fa-trash"></i>Clear Currencies</button>
+<!--                    {{form.clear_currencies(class_='btn btn-sm btn-primary p-2')}}-->
+                    {{form.fetch_data(class_='btn btn-sm btn-primary p-2 fetch_profile_btn',
+                    onclick='scrollToBottom()')}}
+                </div>
+            </div>
         </form>
         {% if list_data %}
-        <table>
-            <tr>
-                <th>Symbol</th><th>Name</th><th>Price</th>
-                <th>Value</th><th>percent_change_24h</th>
-                <th>percent_change_7d</th>
+        <table id='crypto_portfolio_table' class="table table-hover">
+            <thead>
+            <tr class="text-right">
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Value</th>
+                <th>% Change 24h</th>
+                <th>% Change 7d</th>
             </tr>
+            </thead>
+            <tbody>
             {% for record in list_data %}
-            <tr>
-                <td>{{record['Symbol']}}</td><td>{{record['Name']}}</td>
-                <td>{{record['Price']}}</td><td>{{record['Value']}}</td>
-                <td>{{record['percent_change_24h']}}</td><td>{{record['percent_change_7d']}}</td>
+            <tr class="text-right">
+                <td>{{record['Symbol']}}</td>
+                <td>{{record['Name']}}</td>
+                <td>{{record['Price']}}</td>
+                <td>{{record['Value']}}</td>
+                <td>{{record['percent_change_24h']}}</td>
+                <td>{{record['percent_change_7d']}}</td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
         {% endif %}
     </div>
     <div class="crypto-portfolio-right-column">
-        <h3>Available CryptoCyrrencies</h3>
+        <h3>Available Crypto Currencies</h3>
+        <p class="text-justified">Click to add a currency.</p>
         {% if crypto_symbols %}
+        <div>
         {% for v in crypto_symbols %}
-        <td>{{v}}</td>
+<!--        <td>{{v}}</td>-->
+            <button id="add_c_curr_btn" class="btn btn-primary btn-sm m-1 p-0" value="{{v}}" onclick="addCryptoSymbol(this)">{{v}}</button>
+            {% if loop.index % 3 == 0 %}</div> <div> {% endif %}
         {% endfor %}
+        </div>
         {% endif %}
     </div>
 </div>
 {% endblock %}
+{% block extra_scripts %}
+<script>
+function addCryptoSymbol(target){
+    document.getElementsByClassName('cur_sym_field')[0].value = target.value;
+}
+function addSymbolAndAmount(target){
+<!--    target.preventDefault();-->
+    let curr = document.getElementsByClassName('cur_sym_field')[0].value;
+    let amount = document.getElementsByClassName('cur_amount')[0].value;
+    if(curr == '' || amount == ''){
+<!--        document.getElementsByClassName('no_cur_error')[0].value =-->
+<!--        'Please add both currency and amount.'-->
+        alert('Please add both currency and amount.');
+        return;
+    }
+    document.getElementsByClassName('added_cur')[0].value += curr + '-' + amount + '\n'
+<!--    document.getElementsByClassName('cur_sym_field')[0].value + '-' +-->
+<!--    document.getElementsByClassName('cur_amount')[0].value + '\n';-->
+}
+function clearAddedCurrencies(e){
+    document.getElementsByClassName('added_cur')[0].innerHTML = '';
+    document.getElementsByClassName('added_cur')[0].value = '';
+}
+function scrollToBottom(){
+    document.location.hash = '#crypto_portfolio_table';
+}
+</script>
+{% endblock extra_scripts %}
