@@ -6,7 +6,7 @@ from stock_data.stock_app.models import StockTechnicalTerms
 blog = Blueprint('blog', __name__, template_folder='templates')
 
 
-@blog.route('/blog_home', methods=['GET', 'POST'])
+@blog.route('/blog', methods=['GET', 'POST'])
 def blog_home():
     posts = StockTechnicalTerms.query.order_by(desc('updated')).all()
     if request.method == 'POST':
@@ -31,4 +31,5 @@ def post(pid):
     blog_post = StockTechnicalTerms.query.get(pid)
     if not blog_post:
         return redirect(url_for('blog.blog_home'))
-    return render_template('post.html', post=blog_post)
+    posts = StockTechnicalTerms.query.order_by(desc('updated'))[:20]
+    return render_template('post.html', post=blog_post, posts=posts)

@@ -1,0 +1,36 @@
+{%extends "main_page.html"%}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog/blog_home.css' )}}">
+{% endblock extra_head %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="text-center">
+                <h1 class="text-">Stock Basics and Guidelines</h1>
+                <p>This blog presents writers own ideas and findings that may be right or wrong.
+                    Therefore, these should not be considered as standard. The blog
+                    provides a general guideline to a person who is new investor and not very familiar with
+                    stocks.</p>
+            </div>
+            {% block blog_content %}{% endblock blog_content %}
+        </div>
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3>Articles</h3>
+            <p class='text-muted'>
+<!--                You can put any information here you'd like.-->
+              <ul class="list-group">
+              {% for post in posts %}
+                <li class="list-group-item list-group-item-light">
+                    <a class="article-title" href="{{url_for('blog.post', pid=post.id)}}">
+                        {{ post.term_name[:20] }} {% if post.term_name|length > 20 %}...{% endif %}</a></li>
+              {% endfor %}
+<!--                <li class="list-group-item list-group-item-light">Announcements</li>-->
+<!--                <li class="list-group-item list-group-item-light">Calendars</li>-->
+<!--                <li class="list-group-item list-group-item-light">etc</li>-->
+              </ul>
+            </p>
+          </div>
+        </div>
+    </div>
+{% endblock content %}

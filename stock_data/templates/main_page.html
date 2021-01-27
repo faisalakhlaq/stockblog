@@ -11,7 +11,7 @@
 </head>
 <body>
     {% include 'main_nav_bar.html' %}
-    <div class="container">
+    <main role="main" class="container">
         <div class="flash-messages">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -22,7 +22,7 @@
             {% endwith %}
         </div>
         {%block content%}{%endblock%}
-    </div>
+    </main>
     <div class="main-footer">
         <div>
             Thanks for visiting <br>
@@ -42,6 +42,7 @@
         }, 30000);
         // message div should disappear after 30 sec
     </script>
+    {% include 'snippets/css.html' %}
 {% endblock extra_scripts %}
 </body>
 </html>

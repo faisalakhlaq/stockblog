@@ -9,47 +9,49 @@
             {{ error_message | safe }}
     </div>
     <form action="" method="post">
-        {{ form.csrf_token }}
-        {{ form.hidden_tag() }}
-        <h1>Stock Technical Terms Entry Form</h1>
-        <p>You are logged in as <b>{{current_user.name}}</b>
-            {{ form.refresh() }}</p>
-        <p>
-            {{ form.term_id(type='hidden') }}
-            <div class="update-user-label">{{ form.term_name.label }}</div>
-            {{ form.term_name(size=30, class="update-user-tb") }}
-            {% for error in form.term_name.errors %}</br>
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            <div class="">{{ form.definition.label }}</div>
-            {{ form.definition(size=255, class="tef-taf", rows=3, cols=45) }}
-            {% for error in form.definition.errors %}<br>
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            <div class="">{{ form.description.label }}</div>
-            {{ form.description(size=500, class="tef-taf", rows=3, cols=45) }}
-            {% for error in form.description.errors %}<br>
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            <div class="update-user-label">{{ form.calculation_process.label }}</div>
-            {{ form.calculation_process(size=500, class="tef-taf", rows=3, cols=45) }}
-            {% for error in form.calculation_process.errors %}<br>
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.add_new() }}
-            {{ form.search() }}
-            {{ form.update() }}
-            {{ form.clear() }}
-            {{ form.refresh() }}
-        </p>
+        <fieldset class="form-group">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+            <legend class="border-bottom mb-4"><h1>Stock Technical Terms Entry Form</h1></legend>
+            <p>You are logged in as <b>{{current_user.name}}</b>
+                {{ form.refresh(class='btn btn-outline-info') }}</p>
+            <div class="form-group">
+                {{ form.term_id(type='hidden') }}
+                <div class="update-user-label">{{ form.term_name.label }}</div>
+                {{ form.term_name(size=30, class="update-user-tb") }}
+                {% for error in form.term_name.errors %}</br>
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div  class="form-group">
+                <div class="">{{ form.definition.label }}</div>
+                {{ form.definition(size=255, class="tef-taf", rows=3, cols=45) }}
+                {% for error in form.definition.errors %}<br>
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div  class="form-group">
+                <div class="">{{ form.description.label }}</div>
+                {{ form.description(size=500, class="tef-taf", rows=3, cols=45) }}
+                {% for error in form.description.errors %}<br>
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <div class="update-user-label">{{ form.calculation_process.label }}</div>
+                {{ form.calculation_process(size=500, class="tef-taf", rows=3, cols=45) }}
+                {% for error in form.calculation_process.errors %}<br>
+                <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.add_new(class='btn btn-outline-info') }}
+                {{ form.search(class='btn btn-outline-info') }}
+                {{ form.update(class='btn btn-outline-info') }}
+                {{ form.clear(class='btn btn-outline-info') }}
+                {{ form.refresh(class='btn btn-outline-info') }}
+            </div>
+        </fieldset>
     </form>
 </div>
 <div class="stock-terms-table">
