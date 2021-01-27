@@ -23,8 +23,7 @@
         </form>
     </div>
     {% for post in posts %}
-    <a href=""><h3>{{post.term_name}}</h3></a>
-
+    <a href="{{url_for('blog.post', pid=post.id)}}"><h3>{{post.term_name}}</h3></a>
     {% if post.definition %}
     <h5>Definition</h5>
     <p>{{ post.definition[:100] }} ...</p>

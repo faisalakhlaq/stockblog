@@ -24,3 +24,9 @@ def blog_home():
             else:
                 flash('Please provide a name!')
     return render_template('blog_home.html', posts=posts)
+
+
+@blog.route('/post/<int:pid>', methods=['GET'])
+def post(pid):
+    post = StockTechnicalTerms.query.get(pid)
+    return render_template('post.html', post=post)

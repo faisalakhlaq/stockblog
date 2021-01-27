@@ -5,8 +5,7 @@ import datetime
 class StockTechnicalTerms(db.Model):
     __tablename__ = "stock_tech_terms"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # TODO drop constraint unique from term_name. One term can have
-    # different definitions
+    # TODO create slug field
     term_name = db.Column(db.String(255), nullable=False, unique=True)
     definition = db.Column(db.String(500))
     description = db.Column(db.String(500))
