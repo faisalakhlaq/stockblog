@@ -4,10 +4,10 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 # from get_all_tickers import get_tickers as gt
 
 from stock_data import app
-from stock_data.forms import StockDataForm
-from stock_data.stock_analysis import StockAnalyzer
-from stock_data.forms import CryptoFetcherForm
-from stock_data.crypto import CoinMarket
+from stock_data.old_forms import StockDataForm
+from stock_data.old_stock_analysis import StockAnalyzer
+from stock_data.old_forms import CryptoFetcherForm
+from stock_data.old_crypto import CoinMarket
 
 
 @app.route('/')

@@ -1,0 +1,44 @@
+{%extends "main_page.html"%}
+{% block extra_head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock extra_head %}
+{% block title %} Blog | {{ super() }} {% endblock %}
+{% block content %}
+<div class="bh-container">
+    <div class="text-center">
+        <div class="error-message">
+                {{ error_message | safe }}
+        </div>
+        <h1 class="text-">Stock Basics and Guidelines</h1>
+        <p><i>This blog presents writers own ideas and findings that may be right or wrong.
+            Therefore, these should not be considered as standard. The blog
+            provides a general guideline to a person who is new investor and not very familiar with
+            stocks.</i></p>
+
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="text" id="query" name="query">
+            <button class="btn btn-primary" type="submit">Search</button>
+            <button name='refresh' class="btn btn-primary" type="submit">View All</button>
+        </form>
+    </div>
+    {% for post in posts %}
+    <a href=""><h3>{{post.term_name}}</h3></a>
+
+    {% if post.definition %}
+    <h5>Definition</h5>
+    <p>{{ post.definition[:100] }} ...</p>
+
+    {% elif post.description %}
+    <h5>Description</h5>
+    <p>{{ post.description[:100] }} ...</p>
+
+
+    {% elif post.calculation_process %}
+    <h5>Calculation Process</h5>
+    <p>{{ post.calculation_process[:100] }} ...</p>
+    {% endif %}
+
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -18,24 +18,24 @@ def home():
     return render_template('home.html')
 
 
-@stock.route('/stock_technical_terms', methods=['GET', 'POST'])
-def stock_technical_terms():
-    technical_terms = StockTechnicalTerms.query.order_by(desc('updated')).all()
-    if request.method == 'POST':
-        # import pdb; pdb.set_trace()
-        if request.form.get('refresh'):
-            pass
-        elif request.form.get('query'):
-            term_name_ = request.form.get('query')
-            if term_name_ and len(term_name_.strip()) > 0:
-                rs = StockTechnicalTerms.query.filter(StockTechnicalTerms.term_name.ilike("%" + term_name_ + "%")).all()
-                if len(rs) > 0:
-                    technical_terms = rs
-                else:
-                    flash('Sorry no terms found with the given name!')
-            else:
-                flash('Please provide a name!')
-    return render_template("stock_technical_terms.html", terms=technical_terms)
+# @stock.route('/stock_technical_terms', methods=['GET', 'POST'])
+# def stock_technical_terms():
+#     technical_terms = StockTechnicalTerms.query.order_by(desc('updated')).all()
+#     if request.method == 'POST':
+#         # import pdb; pdb.set_trace()
+#         if request.form.get('refresh'):
+#             pass
+#         elif request.form.get('query'):
+#             term_name_ = request.form.get('query')
+#             if term_name_ and len(term_name_.strip()) > 0:
+#                 rs = StockTechnicalTerms.query.filter(StockTechnicalTerms.term_name.ilike("%" + term_name_ + "%")).all()
+#                 if len(rs) > 0:
+#                     technical_terms = rs
+#                 else:
+#                     flash('Sorry no terms found with the given name!')
+#             else:
+#                 flash('Please provide a name!')
+#     return render_template("stock_technical_terms.html", terms=technical_terms)
 
 
 @stock.route('/stock_data', methods=['GET', 'POST'])
@@ -63,6 +63,7 @@ def stock_data():
         data = StockAnalyzer().get_graph(stock_ticker, start_date, end_date)
         return render_template("stock_data.html", list_of_tickers=tickers,
                                script1=data[0], div1=data[1], cdn_js=data[2], form=form)
+
 
 @login_required
 @stock.route('/stock_terms_entry_form', methods=['GET', 'POST'])

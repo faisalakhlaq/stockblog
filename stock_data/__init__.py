@@ -25,10 +25,12 @@ def create_app(config_class=Config):
     from stock_data.stock_app.routes import stock
     from stock_data.crypto_currency.routes import crypto
     from stock_data.users.routes import users
+    from stock_data.blog.routes import blog
     from stock_data.errors.handlers import errors
     flask_app.register_blueprint(stock)
     flask_app.register_blueprint(crypto)
     flask_app.register_blueprint(users)
+    flask_app.register_blueprint(blog)
     flask_app.register_blueprint(errors)
 
     return flask_app

@@ -2,14 +2,14 @@
 {% block title %}Stock Technical Terms {% endblock %}
 {% block content %}
 <div class="stt-container">
-    <h1>Stock Technical Terms</h1>
+    <h1>{{ term.term_name }}</h1>
     <form method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="text" id="query" name="query">
         <button class="btn btn-primary" type="submit">Search</button>
         <button name='refresh' class="btn btn-primary" type="submit">View All</button>
     </form>
-    {% for term in terms %}
+<!--    {% for term in terms %}-->
     <p>
         <h5>{{ term.term_name }}</h5>
         {% if term.definition %} <b>Definition</b>: {{ term.definition }} {% endif %}
