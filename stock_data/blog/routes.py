@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, flash
+from flask import render_template, request, Blueprint, flash, redirect, url_for
 from sqlalchemy import desc
 
 from stock_data.stock_app.models import StockTechnicalTerms
@@ -28,5 +28,7 @@ def blog_home():
 
 @blog.route('/post/<int:pid>', methods=['GET'])
 def post(pid):
-    post = StockTechnicalTerms.query.get(pid)
-    return render_template('post.html', post=post)
+    blog_post = StockTechnicalTerms.query.get(pid)
+    if not blog_post:
+        return redirect(url_for('blog.blog_home'))
+    return render_template('post.html', post=blog_post)
