@@ -1,0 +1,23 @@
+{% extends 'main_page.html' %}
+{% block content %}
+<div class="d-flex justify-content-center mb-3">
+    <div class="col-md-10 col-sm-10 col-sx-10">
+        {% if user %}
+        <div class="text-center">
+            <img  class="user_image" src="{{ image_file }}" style="width: 64px">
+            <h5>{{user.name}}</h5>
+            {% if posts %}
+                <p>{{ user.name }} has posted following articles.</p>
+            {% endif %}
+        </div>
+            <ul class="list-group">
+            {% for post in posts %}
+            <li class="list-group-item list-group-item-light">
+                <a class="article-title" href="{{url_for('blog.post', pid=post.id)}}">
+                    {{ post.term_name[:100] }} {% if post.term_name|length > 100 %}...{% endif %}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

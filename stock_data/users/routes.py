@@ -4,13 +4,15 @@ from flask import (render_template, redirect,
 from flask_login import (current_user, login_user,
                          logout_user, login_required)
 from stock_data import db, bcrypt
+from sqlalchemy import desc
+
 from .models import User
-from .image_helper import (save_user_image,
-                           identical_images, delete_image)
+from .image_helper import (save_user_image, delete_image)
 from .forms import (LoginForm,
                     UpdateAccountForm, ResetPasswordForm,
                     RequestPasswordResetForm)
 from .user_helper import UserHelper
+from stock_data.stock_app.models import StockTechnicalTerms
 
 users = Blueprint('users', __name__)
 
@@ -150,3 +152,16 @@ def reset_password(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template("reset_password.html", form=form)
+
+
+@users.route('/profile/<username>')
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+    # TODO check if the username is not existing
+    if not user:
+        flash('Sorry no profile found.', 'info')
+        return redirect('/')
+    posts = StockTechnicalTerms.query.filter_by(user_id=user.user_id).order_by(desc('updated')).all()
+    if user.image_url:
+        image_file = url_for('static', filename='images/' + user.image_url)
+    return render_template('profile.html', user=user, posts=posts, image_file=image_file)

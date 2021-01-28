@@ -19,11 +19,13 @@ class StockTechnicalTerms(db.Model):
                  description_=None,
                  calculation_process_=None,
                  # updated_=datetime.datetime.utcnow,
+                 user_id_=None,
                  ):
         self.term_name = term_name_
         self.definition = definition_
         self.description = description_
         self.calculation_process = calculation_process_
+        self.user_id = user_id_
         # self.updated = updated_
 
     def get_id(self):

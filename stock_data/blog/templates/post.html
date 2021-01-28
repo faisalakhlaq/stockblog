@@ -1,13 +1,16 @@
 {% extends "blog_main.html" %}
 {% block title %} {{ post.term_name[:10] }} | {{ super() }} {% endblock %}
 {% block blog_content %}
-<div class="bpost-container media content-section">
-      <div class="media-body">
-        <div class="article-metadata">
-    <!--      <a class="mr-2" href="#">{{ post.author }}</a>-->
-          <small class="text-muted">{{ post.updated.strftime('%Y-%m-%d') }}</small>
-        </div>
-        <h1>{{ post.term_name }}</h1>
+<div class="bpost-container media">
+        <div class="media-body">
+            <h1>{{ post.term_name }}</h1>
+            <div class="article-metadata">
+                {% if post.author %}
+                <small><a class="mr-2" href="{{url_for('users.profile', username=post.author.username)}}">
+                {{ post.author }}</a></small>
+                {% endif %}
+                <small class="text-muted">{{ post.updated.strftime('%Y-%m-%d') }}</small>
+           </div>
         <p>
             {% if post.definition %} <h5>Definition</h5> {{ post.definition }} {% endif %}
             {% if post.description %} <h5>Description</h5> {{ post.description }} {% endif %}
