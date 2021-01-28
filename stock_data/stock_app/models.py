@@ -7,10 +7,11 @@ class StockTechnicalTerms(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # TODO create slug field
     term_name = db.Column(db.String(255), nullable=False, unique=True)
-    definition = db.Column(db.String(500))
-    description = db.Column(db.String(500))
-    calculation_process = db.Column(db.String(500))
+    definition = db.Column(db.Text)
+    description = db.Column(db.Text)
+    calculation_process = db.Column(db.Text)
     updated = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('person.user_id'), nullable=False)
 
     def __init__(self,
                  term_name_,

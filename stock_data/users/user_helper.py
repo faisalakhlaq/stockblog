@@ -34,7 +34,9 @@ class UserHelper:
         :param new_image:
         :return: True if the image has changed
         """
-        if not new_image or new_image.filename == '' or identical_images(new_image):
+        if new_image and not new_image.filename.strip() == '' and not current_user.image_url:
+            return True
+        elif not new_image or new_image.filename.strip() == '' or identical_images(new_image):
             return False
         return True
 

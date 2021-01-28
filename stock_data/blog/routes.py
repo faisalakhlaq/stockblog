@@ -10,7 +10,6 @@ blog = Blueprint('blog', __name__, template_folder='templates')
 def blog_home():
     posts = StockTechnicalTerms.query.order_by(desc('updated')).all()
     if request.method == 'POST':
-        # import pdb; pdb.set_trace()
         if request.form.get('refresh'):
             pass
         elif request.form.get('query'):
@@ -20,9 +19,9 @@ def blog_home():
                 if len(rs) > 0:
                     posts = rs
                 else:
-                    flash('Sorry no terms found with the given name!')
+                    flash('Sorry no terms found with the given search text!', 'info')
             else:
-                flash('Please provide a name!')
+                flash('Please provide a search text!', 'warning')
     return render_template('blog_home.html', posts=posts)
 
 
@@ -30,6 +29,7 @@ def blog_home():
 def post(pid):
     blog_post = StockTechnicalTerms.query.get(pid)
     if not blog_post:
+        flash('Sorry post cannot be found!<br>Redirecting to blog home page.', 'info')
         return redirect(url_for('blog.blog_home'))
-    posts = StockTechnicalTerms.query.order_by(desc('updated'))[:20]
+    posts = StockTechnicalTerms.query.order_by(desc('updated')).all()
     return render_template('post.html', post=blog_post, posts=posts)

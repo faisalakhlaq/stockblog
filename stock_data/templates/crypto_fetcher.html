@@ -109,12 +109,13 @@ function addSymbolAndAmount(target){
 <!--    target.preventDefault();-->
     let curr = document.getElementsByClassName('cur_sym_field')[0].value;
     let amount = document.getElementsByClassName('cur_amount')[0].value;
-    if(curr == '' || amount == ''){
+    if(curr.trim() == ''){
 <!--        document.getElementsByClassName('no_cur_error')[0].value =-->
-<!--        'Please add both currency and amount.'-->
-        alert('Please add both currency and amount.');
+<!--        'Please add currency and amount.'-->
+        alert('Please add currency and amount.');
         return;
     }
+    if(amount.trim() == ''){ amount = 1}
     document.getElementsByClassName('added_cur')[0].value += curr + '-' + amount + '\n'
 <!--    document.getElementsByClassName('cur_sym_field')[0].value + '-' +-->
 <!--    document.getElementsByClassName('cur_amount')[0].value + '\n';-->

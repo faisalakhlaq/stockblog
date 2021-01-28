@@ -28,7 +28,7 @@ def account():
                 return redirect(url_for('users.account'))
             # if the user has updated the image check validity
             if form.image.data:
-                if not form.image.data.filename == '' and not identical_images(form.image.data):
+                if not form.image.data.filename.strip() == '' and UserHelper().is_user_image_updated(form.image.data):
                     picture_url = save_user_image(form.image.data)
                     # if a new image is saved, delete the previous one
                     if current_user.image_url:
@@ -42,6 +42,8 @@ def account():
             flash('Account Updated!', 'success')
             return redirect(url_for('users.account'))
         except TypeError as error:
+            print('Unable to update user, Exception: ', error)
+            flash('Sorry. Unable to update user!', 'info')
             return render_template('user_account.html', form=form, error_message=error)
     elif request.method == 'GET':
         form.name.data = current_user.name

@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
     image_url = db.Column(db.String(255))
     # Define the relationship to Role via UserRoles
     roles = db.relationship('Role', secondary='user_role')
+    posts = db.relationship('StockTechnicalTerms', backref='author', lazy=True)
 
     def __init__(self, name_, email_, username_, password_, created_=None,
                  last_updated_=None, image_url_=None):
@@ -30,6 +31,9 @@ class User(db.Model, UserMixin):
         self.password = password_
         if image_url_:
             self.image_url = image_url_
+
+    def __str__(self):
+        return self.name
 
     def get_id(self):
         return self.user_id
