@@ -51,6 +51,11 @@ def stock_data():
 @stock.route('/stock_terms_entry_form', methods=['GET', 'POST'])
 def stock_terms_entry_form():
     form = StockTechnicalTermsForm()
+    post_id = request.args.get('post_id') or None
+    import pdb; pdb.set_trace()
+    if post_id:
+        post = StockTechnicalTerms.query.get(int(post_id))
+        form = StockTechnicalTermsForm(obj=post)
     technical_terms = StockTechnicalTerms.query.order_by(desc('updated')).all()
     if request.method == 'POST':
         if request.form.get('clear') or request.form.get('refresh'):
@@ -66,12 +71,12 @@ def stock_terms_entry_form():
                 flash('Sorry an error occurred while trying to find this term. <br> Please try again later.')
             else:
                 form = StockTechnicalTermsForm(
-                        term_id=technical_term_id,
-                        term_name=technical_term.term_name,
-                        definition=technical_term.definition,
-                        description=technical_term.description,
-                        calculation_process=technical_term.calculation_process,
-                    )
+                    term_id=technical_term_id,
+                    term_name=technical_term.term_name,
+                    definition=technical_term.definition,
+                    description=technical_term.description,
+                    calculation_process=technical_term.calculation_process,
+                )
         elif request.form.get('delete'):
             technical_term_id = request.form.get('delete')
             # TODO storming the DB. Filter technical_terms to get it.
@@ -87,7 +92,7 @@ def stock_terms_entry_form():
             term_name_ = form.term_name.data
             if term_name_ and len(term_name_.strip()) > 0:
                 # TODO order_by not working
-                rs = StockTechnicalTerms.query.order_by(desc('updated')).\
+                rs = StockTechnicalTerms.query.order_by(desc('updated')). \
                     filter(StockTechnicalTerms.term_name.ilike("%" + term_name_ + "%")).all()
                 if len(rs) > 0:
                     technical_terms = rs

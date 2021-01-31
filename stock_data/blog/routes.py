@@ -1,4 +1,6 @@
-from flask import render_template, request, Blueprint, flash, redirect, url_for
+from flask import (render_template, request, Blueprint,
+                   flash, redirect, url_for, abort)
+from flask_login import current_user, login_required
 from sqlalchemy import desc
 
 from stock_data.stock_app.models import StockTechnicalTerms
@@ -33,3 +35,12 @@ def post(pid):
         return redirect(url_for('blog.blog_home'))
     posts = StockTechnicalTerms.query.order_by(desc('updated')).all()
     return render_template('post.html', post=blog_post, posts=posts)
+
+
+@blog.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):
+    current_post = StockTechnicalTerms.query.get(post_id)
+    if current_post.author != current_user:
+        abort(403)
+    return redirect(url_for('stock.stock_terms_entry_form', post_id=current_post.id))
