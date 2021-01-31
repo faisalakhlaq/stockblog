@@ -1,21 +1,67 @@
 {% extends "blog_main.html" %}
 {% block title %} {{ post.term_name[:10] }} | {{ super() }} {% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/blog/blog_home.css')}}">
+{% endblock extra_head %}
 {% block blog_content %}
-<div class="bpost-container media">
-        <div class="media-body">
-            <h1>{{ post.term_name }}</h1>
-            <div class="article-metadata">
-                {% if post.author %}
-                <small><a class="mr-2" href="{{url_for('users.profile', username=post.author.username)}}">
-                {{ post.author }}</a></small>
-                {% endif %}
-                <small class="text-muted">{{ post.updated.strftime('%Y-%m-%d') }}</small>
-           </div>
-        <p>
-            {% if post.definition %} <h5>Definition</h5> {{ post.definition }} {% endif %}
-            {% if post.description %} <h5>Description</h5> {{ post.description }} {% endif %}
-            {% if post.calculation_process %} <h5>Calculation Process</h5> {{ post.calculation_process }} {% endif %}
-        </p>
+<article class="media content-section">
+    {% if post.author.image_url %}
+    <img class="rounded-circle article-img"
+         src="{{ url_for('static', filename='images/' + post.author.image_url) }}">
+    {% endif %}
+    <div class="media-body">
+      <div class="article-metadata">
+        {% if post.author %}
+            <small><a class="mr-2" href="{{url_for('users.profile', username=post.author.username)}}">
+            {{ post.author }}</a></small>
+        {% endif %}
+        <small class="text-muted">{{ post.updated.strftime('%Y-%m-%d') }}</small>
+        {% if post.author == current_user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1"
+               href="#">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1"
+                    data-toggle="modal" data-target="#deleteModal">Delete</button>
+          </div>
+        {% endif %}
       </div>
+      <h2 class="article-title">{{ post.term_name }}</h2>
+        {% if post.definition %}
+            <p class="article-content">
+                <h5>Definition</h5> {{ post.definition }}
+            </p>
+        {% endif %}
+        {% if post.description %}
+            <p class="article-content">
+                <h5>Description</h5> {{ post.description }}
+            </p>
+        {% endif %}
+        {% if post.calculation_process %}
+            <p class="article-content">
+                <h5>Calculation Process</h5>
+                {{ post.calculation_process }}
+            </p>
+        {% endif %}
+    </div>
+</article>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+   aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <form action="#" method="POST">
+        <input class="btn btn-danger" type="submit" value="Delete">
+      </form>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock blog_content %}
