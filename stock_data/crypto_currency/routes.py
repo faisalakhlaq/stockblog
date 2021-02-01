@@ -34,10 +34,16 @@ def crypto_currency_data():
                     currencies = {}
                     seperator = '-'
                     for cur in amount:
-                        k = cur.split(seperator, 1)
-                        # v = cur.split(seperator, 1)[1]
-                        currencies[str(k[0]).upper()] = k[1]
-
+                        try:
+                            k = cur.split(seperator, 1)
+                            # if the currency is given two times then add amount of the currency
+                            currency = currencies.get(str(k[0]).upper())
+                            if currency:
+                                currencies[str(k[0]).upper()] = int(currency) + int(k[1])
+                            else:
+                                currencies[str(k[0]).upper()] = k[1]
+                        except:
+                            continue
                     data = CoinMarket().get_crypto_portfolio(currencies)
                     return render_template('crypto_fetcher.html', form=form,
                                            list_data=data, crypto_symbols=crypto_symbols)
