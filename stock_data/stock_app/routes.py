@@ -52,7 +52,6 @@ def stock_data():
 def stock_terms_entry_form():
     form = StockTechnicalTermsForm()
     post_id = request.args.get('post_id') or None
-    import pdb; pdb.set_trace()
     if post_id:
         post = StockTechnicalTerms.query.get(int(post_id))
         form = StockTechnicalTermsForm(obj=post)

@@ -38,9 +38,9 @@ def crypto_currency_data():
                             k = cur.split(seperator, 1)
                             # if the currency is given two times then add amount of the currency
                             currency = currencies.get(str(k[0]).upper())
-                            if currency:
+                            if currency and isinstance(k[1], int):
                                 currencies[str(k[0]).upper()] = int(currency) + int(k[1])
-                            else:
+                            elif isinstance(k[1], int):
                                 currencies[str(k[0]).upper()] = k[1]
                         except:
                             continue
