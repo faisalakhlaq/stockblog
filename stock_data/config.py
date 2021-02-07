@@ -2,7 +2,6 @@ import os
 
 
 class Config:
-    DEBUG = True
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DATABASE_URL = os.environ.get('HEROKU_STOCK_DB_URI')
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
