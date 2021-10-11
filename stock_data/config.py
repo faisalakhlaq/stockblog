@@ -4,6 +4,10 @@ import os
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DATABASE_URL = os.environ.get('HEROKU_STOCK_DB_URI')
+    
+    # SQLALCHEMY_DATABASE_URI: The connection string we need to connect to our database. 
+    # This follows the standard convention: 
+    # [DB_TYPE]+[DB_CONNECTOR]://[USERNAME]:[PASSWORD]@[HOST]:[PORT]/[DB_NAME]
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     # SQLALCHEMY_ECHO: When set to 'True', Flask-SQLAlchemy will log all database
     # activity to Python's stderr for debugging purposes.
@@ -28,3 +32,15 @@ class Config:
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.environ.get('EMAIL_USER')
     MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
+
+
+class ProdConfig(Config):
+    FLASK_ENV = 'production'
+    DEBUG = False
+    TESTING = False
+
+
+class DevConfig(Config):
+    FLASK_ENV = 'development'
+    DEBUG = True
+    TESTING = True
