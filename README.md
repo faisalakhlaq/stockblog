@@ -11,3 +11,4 @@ The user can write about stock terms and guidelines on the blog.
 - Flask (flask_login, forms, SQLAlchemy, Blueprint)
 - PostgreSQL
 
+The websites was previouly deployed on heroku but is currently down.
